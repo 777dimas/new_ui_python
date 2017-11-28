@@ -7,7 +7,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit
 from PyQt5.QtWidgets import QPushButton
 
-class Example(QWidget):
+class AuthWindow(QWidget):
 
     def __init__(self):
         super().__init__()
@@ -47,6 +47,7 @@ class Example(QWidget):
 
     def writeLogins(self):
         login = self.loginField.text()
+        #TODO: even on this stage you suppose to encrypt your password
         password = self.passField.text()
         loginValue = (login+','+password)
         config = configparser.ConfigParser()
@@ -58,5 +59,6 @@ class Example(QWidget):
 if __name__ == '__main__':
 
     app = QtWidgets.QApplication(sys.argv)
-    ex = Example()
+    ex = AuthWindow()
     sys.exit(app.exec_())
+    
