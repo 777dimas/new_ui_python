@@ -4,8 +4,7 @@ import configparser
 import sys
 
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit
-from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton
 
 class Example(QWidget):
 
