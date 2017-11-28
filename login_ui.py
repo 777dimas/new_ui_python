@@ -6,7 +6,7 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton
 
-class Example(QWidget):
+class AuthWindow(QWidget):
 
     def __init__(self):
         super().__init__()
@@ -57,5 +57,5 @@ class Example(QWidget):
 if __name__ == '__main__':
 
     app = QtWidgets.QApplication(sys.argv)
-    ex = Example()
+    ex = AuthWindow()
     sys.exit(app.exec_())
