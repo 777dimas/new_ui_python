@@ -3,60 +3,60 @@
 import configparser
 import sys
 
-import PyQt5.QtWidgets
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit
+from PyQt5.QtWidgets import QPushButton
 
-
-class Example(PyQt5.QtWidgets.QWidget):
+class Example(QWidget):
 
     def __init__(self):
         super().__init__()
         self.initUI()
 
     def initUI(self):
-     #   config = configparser.ConfigParser()
-     #   config.read('launcher.ini')
-     #   login = config.get('Options', 'Logins')
 
-        name_set = PyQt5.QtWidgets.QLineEdit(self)
-        name_set.move(90, 20)
-        name_set.resize(215, 30)
+        self.loginField = QLineEdit(self)
+        self.loginField.move(90, 20)
+        self.loginField.resize(215, 30)
+        loginFieldName = QLabel(self)
+        loginFieldName.setText("Логин:")
+        loginFieldName.move(40, 25)
 
-        pass_set = PyQt5.QtWidgets.QLineEdit(self)
-        pass_set.move(90, 70)
-        pass_set.resize(215, 30)
+        self.passField = QLineEdit(self)
+        self.passField.move(90, 70)
+        self.passField.resize(215, 30)
+        passFieldName = QLabel(self)
+        passFieldName.setText("Пароль:")
+        passFieldName.move(32, 75)
 
-        button_set = PyQt5.QtWidgets.QPushButton("Set", self)
+        button_set = QPushButton("Применить", self)
         button_set.setGeometry(380, 70, 90, 30)
-       # button_set.clicked.connect(self.buttonSet)
+        button_set.clicked.connect(self.writeLogins)
+        button_set.clicked.connect(self.close)
         button_set.move(90, 130)
 
-        button_close = PyQt5.QtWidgets.QPushButton("Close", self)
-        button_close.setGeometry(380, 70, 90, 30)
-        #button_close.clicked.connect(self.closeEvent)
-        button_close.move(215, 130)
+        closeButton = QPushButton("Закрыть", self)
+        closeButton.setGeometry(380, 70, 90, 30)
+        closeButton.clicked.connect(self.close)
+        closeButton.move(215, 130)
 
-        self.setWindowTitle('Login')
+        self.setWindowTitle('- Авторизация - ')
         self.setFixedHeight(200)
         self.setFixedWidth(400)
         self.show()
-        rectangle = self.frameGeometry()
-        centerPoint = PyQt5.QtWidgets.QDesktopWidget().availableGeometry().center()
-        rectangle.moveCenter(centerPoint)
-        self.move(rectangle.topLeft())
 
-   # def buttonSet(self):
-   #     config = configparser.ConfigParser()
-   #     config.read('launcher.ini')
-   #     config.set('Options', 'Logins', self.())
-   #     with open('launcher.ini', 'w') as configfile:
-   #         config.write(configfile)
-
-   # def buttonClose(self):
-
-
+    def writeLogins(self):
+        login = self.loginField.text()
+        password = self.passField.text()
+        loginValue = (login+','+password)
+        config = configparser.ConfigParser()
+        config.read('launcher.ini')
+        config.set('Options', 'Logins', loginValue)
+        with open('launcher.ini', 'w') as configfile:
+            config.write(configfile)
 
 if __name__ == '__main__':
 
-    app = PyQt5.QtWidgets.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     ex = Example()
     sys.exit(app.exec_())
