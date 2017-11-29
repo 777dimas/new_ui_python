@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import configparser
+import configparser, subprocess
 import sys
 
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QDesktopWidget
 
 class AuthWindow(QWidget):
 
@@ -49,19 +49,35 @@ class AuthWindow(QWidget):
         self.setWindowTitle('- Autorization - ')
         self.setFixedHeight(250)
         self.setFixedWidth(400)
+        self.center()
         self.show()
 
+    def center(self):
+
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+
+
     def writeLogins(self):
+
         login = self.loginField.text()
         password = self.passField.text()
         serial = self.serialField.text()
-        loginValue = (login+','+password)
-        config = configparser.ConfigParser()
-        config.read('launcher.ini')
-        config.set('Options', 'Logins', loginValue)
-        config.set('Options', 'serial', serial)
-        with open('launcher.ini', 'w') as configfile:
-            config.write(configfile)
+        if not login or password or serial:
+            subprocess.call("/home/kriptex/PycharmProjects/new_ui_python/error_ui.py", shell=True)
+        else:
+            loginValue = (login+','+password)
+            config = configparser.ConfigParser()
+            config.read('launcher.ini')
+            config.set('Options', 'Logins', loginValue)
+            config.set('Options', 'serial', serial)
+            with open('launcher.ini', 'w') as configfile:
+                config.write(configfile)
+                if not login or password or serial:
+                    subprocess.call("error.py")
+       # subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
 
 if __name__ == '__main__':
 
