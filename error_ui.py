@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import sys, subprocess
+import sys
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QDesktopWidget
@@ -27,10 +27,10 @@ class ErrorWindow(QWidget):
 
     def center(self):
 
-        qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
+        windowGeometry = self.frameGeometry()
+        windowCenter = QDesktopWidget().availableGeometry().center()
+        windowGeometry.moveCenter(windowCenter)
+        self.move(windowGeometry.topLeft())
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
