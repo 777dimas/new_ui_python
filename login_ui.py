@@ -65,7 +65,7 @@ class AuthWindow(QWidget):
         login = self.loginField.text()
         password = self.passField.text()
         serial = self.serialField.text()
-        if not login or password or serial:
+        if not login or not password or not serial:
             subprocess.call("/home/kriptex/PycharmProjects/new_ui_python/error_ui.py", shell=True)
         else:
             loginValue = (login+','+password)
