@@ -71,11 +71,11 @@ class AuthWindow(QWidget):
             loginValue = (login+','+password)
             config = configparser.ConfigParser()
             config.read('launcher.ini')
-            config.set('Options', 'Logins', loginValue)
+            config.set('Options', 'logins', loginValue)
             config.set('Options', 'serial', serial)
             with open('launcher.ini', 'w') as configfile:
                 config.write(configfile)
-       # subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
+        subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
 
 if __name__ == '__main__':
 
