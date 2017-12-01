@@ -75,8 +75,6 @@ class AuthWindow(QWidget):
             config.set('Options', 'serial', serial)
             with open('launcher.ini', 'w') as configfile:
                 config.write(configfile)
-                if not login or password or serial:
-                    subprocess.call("error.py")
        # subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
 
 if __name__ == '__main__':
