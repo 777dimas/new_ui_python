@@ -69,7 +69,7 @@ class AuthWindow(QWidget):
         else:
             login_value = (login+','+password)
             config = configparser.ConfigParser()
-            config.read('launcher.ini')
+            config.read('launcher.ini', encoding='utf-8')
             config.set('Options', 'Autologin', login_value)
             config.set('Options', 'Serial', serial)
             with open('launcher.ini', 'w') as configfile:
