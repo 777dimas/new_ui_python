@@ -4,7 +4,7 @@ import configparser, subprocess
 import sys
 
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QDesktopWidget
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QDesktopWidget, QMessageBox
 
 class AuthWindow(QWidget):
 
@@ -65,19 +65,20 @@ class AuthWindow(QWidget):
         password = self.pass_field.text()
         serial = self.serial_field.text()
         if not login or not password or not serial:
-            subprocess.call("/home/dima/PycharmProjects/new_ui_python/error_ui.py", shell=True)
+            print(login)
+            #subprocess.call("poweroff", shell=True)
         else:
             login_value = (login+','+password)
             config = configparser.ConfigParser()
-            config.read('launcher.ini', encoding='utf-8')
-            config.set('Options', 'Autologin', login_value)
+            config.optionxform = str
+            config.read('launcher.ini')
+            config.set('Options', 'AutoLogin', login_value)
             config.set('Options', 'Serial', serial)
             with open('launcher.ini', 'w') as configfile:
                 config.write(configfile)
-       # subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
+      #  subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
 
 if __name__ == '__main__':
-
     app = QtWidgets.QApplication(sys.argv)
     ex = AuthWindow()
     sys.exit(app.exec_())
