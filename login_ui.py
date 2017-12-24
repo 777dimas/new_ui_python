@@ -34,7 +34,7 @@ class AuthWindow(QWidget):
         serialFieldName = QLabel(self)
         serialFieldName.setText("Serial:")
         serialFieldName.move(48, 125)
-        self.serialField.setText("1234")
+        self.serialField.setText("123")
 
         button_set = QPushButton("Apply", self)
         button_set.setGeometry(380, 70, 90, 30)
