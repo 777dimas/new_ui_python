@@ -36,3 +36,4 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     ex = ErrorWindow()
     sys.exit(app.exec_())
+
