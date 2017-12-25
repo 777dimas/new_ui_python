@@ -59,8 +59,8 @@ class AuthWindow(QWidget):
     def center(self):
 
         windowGeometry = self.frameGeometry()
-        centerWindow = QDesktopWidget().availableGeometry().center()
-        windowGeometry.moveCenter(centerWindow)
+        windowCenter = QDesktopWidget().availableGeometry().center()
+        windowGeometry.moveCenter(windowCenter)
         self.move(windowGeometry.topLeft())
 
 
@@ -74,10 +74,11 @@ class AuthWindow(QWidget):
             self.config.set('Options', 'Serial', serial)
             with open('launcher.ini', 'w') as configfile:
                 self.config.write(configfile)
+            while True:
+                subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
         else:
             subprocess.call("./error_ui.py", shell=True)
-        while True:
-            subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
+
 
 if __name__ == '__main__':
 
