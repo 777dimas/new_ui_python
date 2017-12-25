@@ -11,6 +11,7 @@ class AuthWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.config = configparser.ConfigParser()
+        self.config.optionxform = str
         self.config.read('launcher.ini')
         self.initUI()
 
@@ -36,7 +37,7 @@ class AuthWindow(QWidget):
         serialFieldName = QLabel(self)
         serialFieldName.setText("Serial:")
         serialFieldName.move(48, 125)
-        self.serialField.setText(self.config.get('Options', 'serial'))
+        self.serialField.setText(self.config.get('Options', 'Serial'))
 
         button_set = QPushButton("Apply", self)
         button_set.setGeometry(380, 70, 90, 30)
@@ -69,13 +70,13 @@ class AuthWindow(QWidget):
         serial = self.serialField.text()
         if login and password and self.serialField.text():
             loginValue = (login + ',' + password)
-            self.config.set('Options', 'logins', loginValue)
-            self.config.set('Options', 'serial', serial)
+            self.config.set('Options', 'Autologin', loginValue)
+            self.config.set('Options', 'Serial', serial)
             with open('launcher.ini', 'w') as configfile:
                 self.config.write(configfile)
         else:
             subprocess.call("./error_ui.py", shell=True)
-        subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
+       # subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
 
 if __name__ == '__main__':
 
