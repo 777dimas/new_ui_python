@@ -68,7 +68,7 @@ class AuthWindow(QWidget):
         login = self.loginField.text()
         password = self.passField.text()
         serial = self.serialField.text()
-        if login and password and self.serialField.text():
+        if login and password and serial:
             loginValue = (login + ',' + password)
             self.config.set('Options', 'Autologin', loginValue)
             self.config.set('Options', 'Serial', serial)
