@@ -43,6 +43,7 @@ class AuthWindow(QWidget):
         button_set.setGeometry(380, 70, 90, 30)
         button_set.clicked.connect(self.writeLogins)
         button_set.clicked.connect(self.close)
+        button_set.clicked.connect(self.startProgramm)
         button_set.move(90, 180)
 
         closeButton = QPushButton("Close", self)
@@ -63,7 +64,6 @@ class AuthWindow(QWidget):
         windowGeometry.moveCenter(windowCenter)
         self.move(windowGeometry.topLeft())
 
-
     def writeLogins(self):
         login = self.loginField.text()
         password = self.passField.text()
@@ -74,11 +74,22 @@ class AuthWindow(QWidget):
             self.config.set('Options', 'Serial', serial)
             with open('launcher.ini', 'w') as configfile:
                 self.config.write(configfile)
-            while True:
-                subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
         else:
             subprocess.call("./error_ui.py", shell=True)
 
+    def startProgramm(self):
+
+        while True:
+            subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
+
+    def startMulti(self):
+
+        from multiprocessing import Process
+
+        prStartProgramm = Process(target=self.startProgramm)
+        prStartProgramm.start()
+
+        prStartProgramm.join()
 
 if __name__ == '__main__':
 
