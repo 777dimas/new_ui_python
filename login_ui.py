@@ -65,31 +65,19 @@ class AuthWindow(QWidget):
         self.move(windowGeometry.topLeft())
 
     def writeLogins(self):
-        login = self.loginField.text()
-        password = self.passField.text()
-        serial = self.serialField.text()
-        if login and password and serial:
-            loginValue = (login + ',' + password)
+        if self.loginField.text() and self.passField.text() and self.serialField.text():
+            loginValue = (self.loginField.text() + ',' + self.passField.text())
             self.config.set('Options', 'Autologin', loginValue)
-            self.config.set('Options', 'Serial', serial)
+            self.config.set('Options', 'Serial', self.serialField.text())
             with open('launcher.ini', 'w') as configfile:
                 self.config.write(configfile)
         else:
             subprocess.call("./error_ui.py", shell=True)
 
     def startProgramm(self):
-
-        while True:
-            subprocess.call("cd /home/flash/Progs/GlobalSlots/ && wine launcher.exe", shell=True)
-
-    def startMulti(self):
-
-        from multiprocessing import Process
-
-        prStartProgramm = Process(target=self.startProgramm)
-        prStartProgramm.start()
-
-        prStartProgramm.join()
+        if self.loginField.text() and self.passField.text() and self.serialField.text():
+            while True:
+               subprocess.call("./wine launcher.exe", shell=True)
 
 if __name__ == '__main__':
 
