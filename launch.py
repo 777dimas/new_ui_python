@@ -1,11 +1,13 @@
-import configparser, subprocess
+import configparser, subprocess, time
 
 config = configparser.ConfigParser()
 config.read('launcher.ini')
 auto_login = config.get('Options', 'Autologin')
 serial = config.get('Options', 'Serial')
-if auto_login or serial:
+if auto_login and serial:
     while True:
-        subprocess.call("cd /home/dima/PycharmProjects/new_ui_python/ && wine launcher.exe", shell=True)
+        subprocess.call("wine launcher.exe", shell=True)
+
 else:
     subprocess.call("./login_ui.py", shell=True)
+    time.sleep(5)
