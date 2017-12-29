@@ -25,7 +25,7 @@ class AuthWindow(QWidget):
         self.serial_edit.setText(self.config.get('Options', 'Serial'))
         self.serial_label = self.build_label("Serial:", 48, 125)
 
-        self.apply_btn = self.build_button("Apply", 90, 180, self.write_logins)
+        self.apply_btn = self.build_button("Apply", 90, 180, self.new_pr)
         self.close_btn = self.build_button("Close", 215, 180)
 
         self.setWindowTitle('- Autorization - ')
@@ -66,11 +66,22 @@ class AuthWindow(QWidget):
                 self.config.write(configfile)
         else:
             subprocess.call("./error_ui.py", shell=True)
+
+    def launcher_start(self):
         if self.login_edit.text() and self.pass_edit.text() and self.serial_edit.text():
             while True:
                 subprocess.call("wine launcher.exe", shell=True)
                 time.sleep(5)
 
+    def new_pr(self):
+        from multiprocessing import Process
+        process_write_logins = Process(target=self.write_logins)
+        process_write_logins.start()
+        process_write_logins.join()
+
+        process_launcer_start = Process(target=self.launcher_start)
+        process_launcer_start.start()
+        process_launcer_start.join()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
