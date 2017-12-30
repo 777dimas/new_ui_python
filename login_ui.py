@@ -64,9 +64,9 @@ class AuthWindow(QWidget):
             self.config.set('Options', 'Serial', self.serial_edit.text())
             with open('launcher.ini', 'w') as configfile:
                 self.config.write(configfile)
+            QPushButton.close(self)
         else:
             subprocess.call("./error_ui.py", shell=True)
-
     def launcher_start(self):
         if self.login_edit.text() and self.pass_edit.text() and self.serial_edit.text():
             while True:
