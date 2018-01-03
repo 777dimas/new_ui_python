@@ -67,6 +67,7 @@ class AuthWindow(QWidget):
             QWidget.close(self)
         else:
             subprocess.call("./error_ui.py", shell=True)
+
     def launcher_start(self):
         if self.login_edit.text() and self.pass_edit.text() and self.serial_edit.text():
             while True:
@@ -82,7 +83,6 @@ class AuthWindow(QWidget):
         process_launcer_start = Process(target=self.launcher_start)
         process_launcer_start.start()
         process_launcer_start.join()
-
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
