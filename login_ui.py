@@ -84,6 +84,7 @@ class AuthWindow(QWidget):
         process_launcer_start.start()
         process_launcer_start.join()
 
+
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     ex = AuthWindow()
