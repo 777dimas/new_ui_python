@@ -64,7 +64,7 @@ class AuthWindow(QWidget):
             self.config.set('Options', 'Serial', self.serial_edit.text())
             with open('launcher.ini', 'w') as configfile:
                 self.config.write(configfile)
-            QPushButton.close(self)
+            QWidget.close(self)
         else:
             subprocess.call("./error_ui.py", shell=True)
     def launcher_start(self):
