@@ -3,7 +3,7 @@
 import configparser, subprocess, sys, time
 
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QDesktopWidget
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QDesktopWidget, QMessageBox
 
 
 class AuthWindow(QWidget):
@@ -25,8 +25,12 @@ class AuthWindow(QWidget):
         self.serial_edit.setText(self.config.get('Options', 'Serial'))
         self.serial_label = self.build_label("Serial:", 48, 125)
 
-        self.apply_btn = self.build_button("Apply", 90, 180, self.new_pr)
+        #self.apply_btn = self.build_button("Apply", 90, 180, self.error_window)
         self.close_btn = self.build_button("Close", 215, 180)
+
+        self.btn = QPushButton('Apply', self)
+        self.btn.setGeometry(90, 180, 90, 30)
+        self.btn.clicked.connect(self.write_logins)
 
         self.setWindowTitle('- Autorization - ')
         self.setFixedHeight(250)
@@ -68,24 +72,17 @@ class AuthWindow(QWidget):
         else:
             subprocess.call("./error_ui.py", shell=True)
 
-    def launcher_start(self):
         if self.login_edit.text() and self.pass_edit.text() and self.serial_edit.text():
             while True:
                 subprocess.call("wine launcher.exe", shell=True)
                 time.sleep(5)
 
-    def new_pr(self):
-        from multiprocessing import Process
-        process_write_logins = Process(target=self.write_logins)
-        process_write_logins.start()
-        process_write_logins.join()
-
-        process_launcer_start = Process(target=self.launcher_start)
-        process_launcer_start.start()
-        process_launcer_start.join()
-
+    #def error_window(self):
+       # QMessageBox.information(None, "Error", "Enter 'Login', 'Password' and 'Serial'", defaultButton=QMessageBox.Ok)
+     #  subprocess.call("./error_ui.py", shell=True)
 
 if __name__ == '__main__':
+
     app = QtWidgets.QApplication(sys.argv)
     ex = AuthWindow()
     sys.exit(app.exec_())
