@@ -7,7 +7,7 @@ serial = config.get('Options', 'Serial')
 if auto_login and serial:
     while True:
         subprocess.call("wine launcher.exe", shell=True)
+        time.sleep(5)
 
 else:
     subprocess.call("./login_ui.py", shell=True)
-    time.sleep(5)

@@ -25,12 +25,8 @@ class AuthWindow(QWidget):
         self.serial_edit.setText(self.config.get('Options', 'Serial'))
         self.serial_label = self.build_label("Serial:", 48, 125)
 
-        #self.apply_btn = self.build_button("Apply", 90, 180, self.error_window)
-        self.close_btn = self.build_button("Close", 215, 180)
-
-        self.btn = QPushButton('Apply', self)
-        self.btn.setGeometry(90, 180, 90, 30)
-        self.btn.clicked.connect(self.write_logins)
+        self.apply_btn = self.build_button("Apply", 90, 180, self.write_logins)
+        self.close_btn = self.build_button("Close", 215, 180, self.close)
 
         self.setWindowTitle('- Autorization - ')
         self.setFixedHeight(250)
@@ -52,12 +48,10 @@ class AuthWindow(QWidget):
         qline_edit.resize(edit_pos_x, edit_pos_y)
         return qline_edit
 
-    def build_button(self, btn_text, btn_pos_x, btn_pos_y, connect_method=None):
+    def build_button(self, btn_text, btn_pos_x, btn_pos_y, connect_method):
         qbutton = QPushButton(btn_text, self)
         qbutton.setGeometry(self.BUTTON_SIZES[0], self.BUTTON_SIZES[1], self.BUTTON_SIZES[2], self.BUTTON_SIZES[3])
-        if connect_method is not None:
-            qbutton.clicked.connect(connect_method)
-        qbutton.clicked.connect(self.close)
+        qbutton.clicked.connect(connect_method)
         qbutton.move(btn_pos_x, btn_pos_y)
         return qbutton
 
@@ -69,17 +63,12 @@ class AuthWindow(QWidget):
             with open('launcher.ini', 'w') as configfile:
                 self.config.write(configfile)
             QWidget.close(self)
-        else:
-            subprocess.call("./error_ui.py", shell=True)
-
-        if self.login_edit.text() and self.pass_edit.text() and self.serial_edit.text():
             while True:
                 subprocess.call("wine launcher.exe", shell=True)
                 time.sleep(5)
-
-    #def error_window(self):
-       # QMessageBox.information(None, "Error", "Enter 'Login', 'Password' and 'Serial'", defaultButton=QMessageBox.Ok)
-     #  subprocess.call("./error_ui.py", shell=True)
+        else:
+            QMessageBox.information(None, "Error", "Enter Login and Password",
+                                    defaultButton=QMessageBox.Ok)
 
 if __name__ == '__main__':
 
