@@ -8,9 +8,15 @@ from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QDesktopWid
 
 class AuthWindow(QWidget):
     BUTTON_SIZES = [380, 70, 90, 30]
+    app = QtWidgets.QApplication(sys.argv)
 
     def __init__(self):
         super().__init__()
+        self.screen = app.primaryScreen()
+        self.size = self.screen.size()
+        self.get_size = ('Size: %dx%d' % (self.size.width(), self.size.height()))
+        self.fixed_size = "1280x1024"
+
         self.config = configparser.ConfigParser()
         self.config.optionxform = str
         self.config.read('launcher.ini')
@@ -64,11 +70,16 @@ class AuthWindow(QWidget):
                 self.config.write(configfile)
             QWidget.close(self)
             while True:
-                subprocess.call("wine launcher.exe", shell=True)
-                time.sleep(5)
+                if self.get_size > self.fixed_size:
+                    subprocess.call("wine explorer /desktop=name,1280x1024 launcher.exe", shell=True)
+                    time.sleep(1)
+                else:
+                    subprocess.call("wine launcher.exe", shell=True)
+                    time.sleep(1)
         else:
             QMessageBox.information(None, "Error", "Enter Login and Password",
                                     defaultButton=QMessageBox.Ok)
+
 
 if __name__ == '__main__':
 
