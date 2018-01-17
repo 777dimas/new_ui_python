@@ -13,8 +13,8 @@ class AuthWindow(QWidget):
         super().__init__()
         self.screen = app.primaryScreen()
         self.size = self.screen.size()
-        self.get_size = ('Size: %dx%d' % (self.size.width(), self.size.height()))
-        self.fixed_size = "1280x1024"
+        self.fixed_width = 1920
+        self.fixed_height = 1080
 
         self.config = configparser.ConfigParser()
         self.config.optionxform = str
@@ -63,17 +63,17 @@ class AuthWindow(QWidget):
     def write_logins(self):
         if self.login_edit.text() and self.pass_edit.text() and self.serial_edit.text():
             login_and_pass_str = (self.login_edit.text() + ',' + self.pass_edit.text())
-            self.config.set('Options', 'Autologin', login_and_pass_str)
+            self.config.set('Options', 'AutoLogin', login_and_pass_str)
             self.config.set('Options', 'Serial', self.serial_edit.text())
             with open('launcher.ini', 'w') as configfile:
                 self.config.write(configfile)
             QWidget.close(self)
             while True:
-                if self.get_size > self.fixed_size:
-                    subprocess.call("wine explorer /desktop=name,1280x1024 launcher.exe", shell=True)
+                if self.size.width() == self.fixed_width and self.size.height() == self.fixed_height:
+                    subprocess.call("wine launcher.exe", shell=True)
                     time.sleep(1)
                 else:
-                    subprocess.call("wine launcher.exe", shell=True)
+                    subprocess.call("wine explorer /desktop=name,1280x1024 launcher.exe", shell=True)
                     time.sleep(1)
         else:
             QMessageBox.information(None, "Error", "Enter Login and Password",

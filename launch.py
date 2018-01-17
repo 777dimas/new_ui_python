@@ -6,20 +6,20 @@ subprocess.call("rsync $args --password-file=/run/initramfs/memory/data/Progs/Gl
 app = QtWidgets.QApplication(sys.argv)
 screen = app.primaryScreen()
 size = screen.size()
-get_size = ('Size: %dx%d' % (size.width(), size.height()))
-fixed_size = "1280x1024"
+fixed_width = 1920
+fixed_height = 1080
 
 config = configparser.ConfigParser()
 config.read('launcher.ini')
-auto_login = config.get('Options', 'Autologin')
+auto_login = config.get('Options', 'AutoLogin')
 serial = config.get('Options', 'Serial')
 if auto_login and serial:
     while True:
-        if get_size > fixed_size:
-            subprocess.call("wine explorer /desktop=name,1280x1024 launcher.exe", shell=True)
+        if size.width() == fixed_width and size.height() == fixed_height:
+            subprocess.call("wine launcher.exe", shell=True)
             time.sleep(1)
         else:
-            subprocess.call("wine launcher.exe", shell=True)
+            subprocess.call("wine explorer /desktop=name,1280x1024 launcher.exe", shell=True)
             time.sleep(1)
 else:
     subprocess.call("./login_ui.py", shell=True)
