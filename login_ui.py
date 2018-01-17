@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QDesktopWid
 
 class AuthWindow(QWidget):
     BUTTON_SIZES = [380, 70, 90, 30]
-    app = QtWidgets.QApplication(sys.argv)
 
     def __init__(self):
         super().__init__()
@@ -79,6 +78,10 @@ class AuthWindow(QWidget):
         else:
             QMessageBox.information(None, "Error", "Enter Login and Password",
                                     defaultButton=QMessageBox.Ok)
+
+        subprocess.call(
+            "rsync $args --password-file=/run/initramfs/memory/data/Progs/GlobalSlots/rsyncp -Lrv --progress --times --ignore-errors --delete-excluded  --force rsync://gup@update.gslots.win:49873/globalslots/plugins_dir/plugins/ ./plugins/ &",
+            shell=True)
 
 
 if __name__ == '__main__':
