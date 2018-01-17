@@ -13,8 +13,8 @@ class AuthWindow(QWidget):
         super().__init__()
         self.screen = app.primaryScreen()
         self.size = self.screen.size()
-        self.fixed_width = 1920
-        self.fixed_height = 1080
+        self.fixed_width = 1280
+        self.fixed_height = 1024
 
         self.config = configparser.ConfigParser()
         self.config.optionxform = str
@@ -31,7 +31,7 @@ class AuthWindow(QWidget):
         self.serial_label = self.build_label("Serial:", 48, 125)
 
         self.apply_btn = self.build_button("Apply", 90, 180, self.write_logins)
-        self.close_btn = self.build_button("Close", 215, 180, self.close)
+        self.close_btn = self.build_button("Close", 215, 180, self.poweroff)
 
         self.setWindowTitle('- Autorization - ')
         self.setFixedHeight(250)
@@ -59,6 +59,9 @@ class AuthWindow(QWidget):
         qbutton.clicked.connect(connect_method)
         qbutton.move(btn_pos_x, btn_pos_y)
         return qbutton
+
+    def poweroff(self):
+        subprocess.call("poweroff", shell=True)
 
     def write_logins(self):
         if self.login_edit.text() and self.pass_edit.text() and self.serial_edit.text():
