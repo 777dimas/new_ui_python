@@ -6,8 +6,8 @@ subprocess.call("rsync $args --password-file=/run/initramfs/memory/data/Progs/Gl
 app = QtWidgets.QApplication(sys.argv)
 screen = app.primaryScreen()
 size = screen.size()
-fixed_width = 1920
-fixed_height = 1080
+fixed_width = 1280
+fixed_height = 1024
 
 config = configparser.ConfigParser()
 config.read('launcher.ini')
