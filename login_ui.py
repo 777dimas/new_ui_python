@@ -83,7 +83,7 @@ class AuthWindow(QWidget):
                                     defaultButton=QMessageBox.Ok)
 
         subprocess.call(
-            "rsync $args --password-file=/run/initramfs/memory/data/Progs/GlobalSlots/rsyncp -Lrv --progress --times --ignore-errors --delete-excluded  --force rsync://gup@update.gslots.win:49873/globalslots/plugins_dir/plugins/ ./plugins/ &",
+            "rsync $args --password-file=/run/initramfs/memory/data/Progs/GlobalSlots/rsyncp -Lrv --progress --times --ignore-errors --delete-excluded  --force rsync://my@update.bug.com:1111/globalslots/plugins_dir/plugins/ ./plugins/ &",
             shell=True)
 
 
