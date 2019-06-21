@@ -1,7 +1,7 @@
 import configparser, subprocess, time, sys
 from PyQt5 import QtWidgets
 
-subprocess.call("rsync $args --password-file=/run/initramfs/memory/data/Progs/GlobalSlots/rsyncp -Lrv --progress --times --ignore-errors --force rsync://gup@update.gslots.win:49873/globalslots/exe_dir/ ./", shell=True)
+subprocess.call("rsync $args --password-file=/run/initramfs/memory/data/Progs/GlobalSlots/rsyncp -Lrv --progress --times --ignore-errors --force rsync://my@update.bug.com:1111/globalslots/plugins_dir/plugins/ ./", shell=True)
 
 app = QtWidgets.QApplication(sys.argv)
 screen = app.primaryScreen()
